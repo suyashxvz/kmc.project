@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hi Layout</title>
+    
+    <!-- Import Poppins Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* CSS Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #ffffff;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            align-items: flex-end; /* Aligns content to bottom */
+            justify-content: space-between;
+            padding: 10vh 8vw; /* Adjust padding to match the image spacing */
+            overflow: hidden; /* Prevents scrollbars */
+        }
+
+        /* Left side "Hi," styling */
+        .logo-container {
+            color: #c8c8c8; /* Light gray color */
+            font-weight: 600; /* Bold/Semi-bold */
+            line-height: 0.75; /* Tightens the height */
+            font-size: 25vw; /* massive responsive size */
+            letter-spacing: -0.05em; /* Slight tightening of letters */
+            user-select: none;
+        }
+
+        /* Right side Navigation styling */
+        .nav-menu {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end; /* Right aligns text */
+            gap: 0.5rem; /* Space between lines */
+            font-size: 1.8rem; /* Adjust based on preference */
+            color: #dcdcdc; /* Slightly lighter gray than the logo */
+            font-weight: 300; /* Light weight */
+            text-align: right;
+            margin-bottom: 2vh; /* Slight alignment adjustment */
+        }
+
+        .nav-item {
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-item:hover {
+            color: #999; /* Darken on hover for interactivity */
+        }
+
+        /* Responsive adjustments for mobile */
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: flex-end;
+                padding: 5vh 5vw;
+            }
+
+            .logo-container {
+                font-size: 40vw; /* Make logo huge on mobile */
+                margin-bottom: 5vh;
+            }
+
+            .nav-menu {
+                align-items: flex-start;
+                text-align: left;
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Left side large text -->
+    <div class="logo-container">
+        Hi,
+    </div>
+
+    <!-- Right side navigation links -->
+    <div class="nav-menu">
+        <div class="nav-item">Explore</div>
+        <div class="nav-item">BRU Sunglasses</div>
+        <div class="nav-item">MKK. Watches</div>
+        <div class="nav-item">LTP Charger</div>
+        <div class="nav-item">Visit My Profolio</div>
+    </div>
+
+</body>
+</html>
