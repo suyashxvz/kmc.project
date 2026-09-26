@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hi Layout</title>
+    <title>Hi Layout · theme toggle</title>
     
     <!-- Import Poppins Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,27 +16,30 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
         }
 
+        /* ----- default (light) theme ----- */
         body {
             font-family: 'Poppins', sans-serif;
             background-color: #ffffff;
             height: 100vh;
             width: 100vw;
             display: flex;
-            align-items: flex-end; /* Aligns content to bottom */
+            align-items: flex-end;
             justify-content: space-between;
-            padding: 10vh 8vw; /* Adjust padding to match the image spacing */
-            overflow: hidden; /* Prevents scrollbars */
+            padding: 10vh 8vw;
+            overflow: hidden;
+            color-scheme: light;
         }
 
         /* Left side "Hi," styling */
         .logo-container {
-            color: #c8c8c8; /* Light gray color */
-            font-weight: 600; /* Bold/Semi-bold */
-            line-height: 0.75; /* Tightens the height */
-            font-size: 25vw; /* massive responsive size */
-            letter-spacing: -0.05em; /* Slight tightening of letters */
+            color: #c8c8c8;
+            font-weight: 600;
+            line-height: 0.75;
+            font-size: 25vw;
+            letter-spacing: -0.05em;
             user-select: none;
         }
 
@@ -44,13 +47,13 @@
         .nav-menu {
             display: flex;
             flex-direction: column;
-            align-items: flex-end; /* Right aligns text */
-            gap: 0.5rem; /* Space between lines */
-            font-size: 1.8rem; /* Adjust based on preference */
-            color: #dcdcdc; /* Slightly lighter gray than the logo */
-            font-weight: 300; /* Light weight */
+            align-items: flex-end;
+            gap: 0.5rem;
+            font-size: 1.8rem;
+            color: #dcdcdc;
+            font-weight: 300;
             text-align: right;
-            margin-bottom: 2vh; /* Slight alignment adjustment */
+            margin-bottom: 2vh;
         }
 
         .nav-item {
@@ -59,7 +62,73 @@
         }
 
         .nav-item:hover {
-            color: #999; /* Darken on hover for interactivity */
+            color: #999;
+        }
+
+        /* ----- theme toggle button – placed under last nav item ----- */
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 0.6rem;
+            margin-top: 1.2rem;          /* space below "Visit My Profolio" */
+            font-size: 1rem;
+            font-weight: 400;
+            color: #aaa;
+            cursor: pointer;
+            user-select: none;
+            transition: color 0.2s;
+            width: 100%;
+            padding: 0.3rem 0 0.1rem 0;
+            border-top: 1px solid rgba(200, 200, 200, 0.3);
+        }
+
+        .theme-toggle:hover {
+            color: #666;
+        }
+
+        .theme-toggle .toggle-icon {
+            font-size: 1.4rem;
+            line-height: 1;
+            transition: transform 0.2s;
+        }
+
+        .theme-toggle .toggle-label {
+            font-size: 0.9rem;
+            font-weight: 400;
+            letter-spacing: 0.3px;
+        }
+
+        /* ----- DARK THEME OVERRIDES (applied to body when .dark) ----- */
+        body.dark {
+            background-color: #121212;
+            color-scheme: dark;
+        }
+
+        body.dark .logo-container {
+            color: #3a3a3a;          /* deep gray, subtle against dark bg */
+        }
+
+        body.dark .nav-menu {
+            color: #4a4a4a;
+        }
+
+        body.dark .nav-item {
+            color: #4a4a4a;
+        }
+
+        body.dark .nav-item:hover {
+            color: #9f9f9f;
+        }
+
+        /* dark mode toggle itself */
+        body.dark .theme-toggle {
+            color: #7a7a7a;
+            border-top-color: #2e2e2e;
+        }
+
+        body.dark .theme-toggle:hover {
+            color: #b0b0b0;
         }
 
         /* Responsive adjustments for mobile */
@@ -72,7 +141,7 @@
             }
 
             .logo-container {
-                font-size: 40vw; /* Make logo huge on mobile */
+                font-size: 40vw;
                 margin-bottom: 5vh;
             }
 
@@ -80,6 +149,15 @@
                 align-items: flex-start;
                 text-align: left;
                 font-size: 1.2rem;
+                width: 100%;
+            }
+
+            /* keep toggle aligned left on mobile, but still clean */
+            .theme-toggle {
+                justify-content: flex-start;
+                gap: 0.8rem;
+                margin-top: 1.5rem;
+                padding-top: 0.8rem;
             }
         }
     </style>
@@ -91,14 +169,80 @@
         Hi,
     </div>
 
-    <!-- Right side navigation links -->
+    <!-- Right side navigation links + toggle -->
     <div class="nav-menu">
         <div class="nav-item">Explore</div>
         <div class="nav-item">BRU Sunglasses</div>
         <div class="nav-item">MKK. Watches</div>
         <div class="nav-item">LTP Charger</div>
         <div class="nav-item">Visit My Profolio</div>
+
+        <!-- TOGGLE THEME placed directly under "Visit My Profolio" -->
+        <div class="theme-toggle" id="themeToggle" role="button" tabindex="0" aria-label="Toggle dark mode">
+            <span class="toggle-icon" id="themeIcon">🌙</span>
+            <span class="toggle-label" id="themeLabel">Dark mode</span>
+        </div>
     </div>
 
+    <script>
+        (function() {
+            // ----- get elements -----
+            const body = document.body;
+            const toggle = document.getElementById('themeToggle');
+            const icon = document.getElementById('themeIcon');
+            const label = document.getElementById('themeLabel');
+
+            // ----- helper: update UI based on current theme -----
+            function updateThemeUI(isDark) {
+                if (isDark) {
+                    body.classList.add('dark');
+                    icon.textContent = '☀️';      // sun for light mode / or switch to light
+                    label.textContent = 'Light mode';
+                } else {
+                    body.classList.remove('dark');
+                    icon.textContent = '🌙';      // moon for dark mode
+                    label.textContent = 'Dark mode';
+                }
+            }
+
+            // ----- read stored preference (default: light) -----
+            const storedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            // check if user already chose a theme, else use system preference
+            let isDark = storedTheme === 'dark' || (storedTheme === null && prefersDark);
+            
+            // apply initial theme
+            updateThemeUI(isDark);
+
+            // ----- toggle function -----
+            function toggleTheme() {
+                // flip the state
+                const nowDark = !body.classList.contains('dark');
+                updateThemeUI(nowDark);
+                // save preference
+                localStorage.setItem('theme', nowDark ? 'dark' : 'light');
+            }
+
+            // ----- event listeners (click + keyboard) -----
+            toggle.addEventListener('click', toggleTheme);
+            
+            toggle.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();   // prevent page scroll on space
+                    toggleTheme();
+                }
+            });
+
+            // Optional: listen to system theme changes if no saved preference
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+                // only update if user hasn't explicitly chosen a theme
+                if (localStorage.getItem('theme') === null) {
+                    const systemDark = e.matches;
+                    updateThemeUI(systemDark);
+                }
+            });
+        })();
+    </script>
 </body>
 </html>
