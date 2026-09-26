@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hi Layout · theme toggle</title>
-    
+
     <!-- Import Poppins Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,10 +22,10 @@
         /* ===== DEFAULT THEME: DARK ===== */
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #121212;      /* dark background */
+            background-color: #121212;
             color-scheme: dark;
-            height: 100vh;
-            width: 100vw;
+            min-height: 100vh;
+            width: 100%;
             display: flex;
             align-items: flex-end;
             justify-content: space-between;
@@ -33,7 +33,7 @@
             overflow: hidden;
         }
 
-        /* Left side "Hi," styling — muted dark gray */
+        /* Left side "Hi," styling */
         .logo-container {
             color: #2e2e2e;
             font-weight: 600;
@@ -41,9 +41,10 @@
             font-size: 25vw;
             letter-spacing: -0.05em;
             user-select: none;
+            flex-shrink: 0;
         }
 
-        /* Right side navigation styling */
+        /* Right side navigation */
         .nav-menu {
             display: flex;
             flex-direction: column;
@@ -54,113 +55,66 @@
             font-weight: 300;
             text-align: right;
             margin-bottom: 2vh;
+            max-width: 45vw;
         }
 
         .nav-item {
             transition: color 0.3s ease;
             cursor: pointer;
+            white-space: nowrap;
         }
 
         .nav-item:hover {
             color: #9f9f9f;
         }
 
-        /* ===== THEME SWITCHER (under "Visit My Portfolio") ===== */
-        .theme-switcher {
+        /* ===== SINGLE THEME TOGGLE BUTTON ===== */
+        .theme-toggle {
             display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 0.4rem;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 0.55rem;
             margin-top: 1.4rem;
             padding-top: 0.9rem;
             border-top: 1px solid #2a2a2a;
             width: 100%;
-            user-select: none;
-        }
-
-        /* main theme button (dark mode indicator) */
-        .theme-option {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            gap: 0.6rem;
             font-size: 0.95rem;
             font-weight: 400;
             color: #7a7a7a;
             cursor: pointer;
+            user-select: none;
             transition: color 0.2s ease;
-            line-height: 1.3;
-            width: 100%;
-            padding: 0.1rem 0;
         }
 
-        .theme-option:hover {
+        .theme-toggle:hover {
             color: #c0c0c0;
         }
 
-        /* active state for the selected theme */
-        .theme-option.active {
-            color: #d0d0d0;
-            font-weight: 400;
-        }
-
-        .theme-option .icon {
+        .theme-toggle .icon {
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 1.3rem;
-            height: 1.3rem;
+            width: 1.2rem;
+            height: 1.2rem;
             flex-shrink: 0;
         }
 
-        .theme-option .icon svg {
-            width: 1.2rem;
-            height: 1.2rem;
+        .theme-toggle .icon svg {
+            width: 1.1rem;
+            height: 1.1rem;
             stroke: currentColor;
             fill: none;
             stroke-width: 1.5;
             stroke-linecap: round;
             stroke-linejoin: round;
-            transition: stroke 0.2s ease;
         }
 
-        .theme-option .label {
+        .theme-toggle .label {
             font-size: 0.95rem;
             letter-spacing: 0.2px;
         }
 
-        /* "Light" sub-option — slightly smaller, indented feel */
-        .theme-option.sub {
-            font-size: 0.9rem;
-            color: #5a5a5a;
-            padding-left: 1.9rem;    /* indent to create a sub-level look */
-            gap: 0.5rem;
-            justify-content: flex-start;  /* left-align the sub option */
-        }
-
-        .theme-option.sub .icon {
-            width: 1.1rem;
-            height: 1.1rem;
-        }
-
-        .theme-option.sub .icon svg {
-            width: 1rem;
-            height: 1rem;
-        }
-
-        .theme-option.sub .label {
-            font-size: 0.85rem;
-        }
-
-        .theme-option.sub:hover {
-            color: #a0a0a0;
-        }
-
-        .theme-option.sub.active {
-            color: #b0b0b0;
-        }
-
-        /* ===== LIGHT THEME OVERRIDES (body.light) ===== */
+        /* ===== LIGHT THEME OVERRIDES ===== */
         body.light {
             background-color: #ffffff;
             color-scheme: light;
@@ -182,80 +136,76 @@
             color: #999;
         }
 
-        body.light .theme-switcher {
+        body.light .theme-toggle {
             border-top-color: #eaeaea;
-        }
-
-        body.light .theme-option {
             color: #b0b0b0;
         }
 
-        body.light .theme-option:hover {
+        body.light .theme-toggle:hover {
             color: #777;
         }
 
-        body.light .theme-option.active {
-            color: #666;
-        }
-
-        body.light .theme-option.sub {
-            color: #c0c0c0;
-        }
-
-        body.light .theme-option.sub:hover {
-            color: #888;
-        }
-
-        body.light .theme-option.sub.active {
-            color: #777;
-        }
-
-        /* Responsive adjustments for mobile */
+        /* ===== RESPONSIVE: MOBILE ===== */
         @media (max-width: 768px) {
             body {
                 flex-direction: column;
                 align-items: flex-start;
                 justify-content: flex-end;
-                padding: 5vh 5vw;
+                padding: 5vh 6vw;
+                overflow-y: auto;
+                overflow-x: hidden;
+                min-height: 100vh;
+                height: auto;
             }
 
             .logo-container {
-                font-size: 40vw;
-                margin-bottom: 5vh;
+                font-size: 30vw;
+                margin-bottom: 3vh;
+                line-height: 0.7;
             }
 
             .nav-menu {
-                align-items: flex-start;
-                text-align: left;
+                align-items: flex-end;
+                text-align: right;
+                font-size: 1.4rem;
+                width: 100%;
+                max-width: 100%;
+                margin-bottom: 0;
+                gap: 0.4rem;
+            }
+
+            .nav-item {
+                white-space: normal;
+                word-break: break-word;
+            }
+
+            .theme-toggle {
+                justify-content: flex-end;
+                margin-top: 1.2rem;
+                padding-top: 0.8rem;
+                width: 100%;
+            }
+        }
+
+        /* Very small screens */
+        @media (max-width: 400px) {
+            .nav-menu {
                 font-size: 1.2rem;
-                width: 100%;
             }
-
-            .theme-switcher {
-                align-items: flex-start;
-                margin-top: 1.5rem;
-                padding-top: 0.9rem;
-                width: 100%;
-            }
-
-            .theme-option {
-                justify-content: flex-start;
-            }
-
-            .theme-option.sub {
-                padding-left: 1.6rem;
+            .logo-container {
+                font-size: 35vw;
             }
         }
     </style>
 </head>
-<body class="dark">   <!-- default is dark -->
+<body class="dark">
 
     <!-- Left side large text -->
     <div class="logo-container">
         Hi,
     </div>
 
-    <!-- Right side: navigation + theme switcher -->
+    <!-- Right side: navigation + single theme toggle -->
     <div class="nav-menu">
         <div class="nav-item">Explore</div>
         <div class="nav-item">BRU Sunglasses</div>
@@ -263,100 +213,79 @@
         <div class="nav-item">LTP Charger</div>
         <div class="nav-item">Visit My Portfolio</div>
 
-        <!-- THEME SWITCHER: dark is main, light is sub -->
-        <div class="theme-switcher" id="themeSwitcher">
-            
-            <!-- DARK (default active) -->
-            <div class="theme-option active" data-theme="dark" id="darkOption" role="button" tabindex="0" aria-label="Dark theme">
-                <span class="icon">
-                    <!-- moon icon (consistent stroke style) -->
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-                    </svg>
-                </span>
-                <span class="label">Dark</span>
-            </div>
-
-            <!-- LIGHT (sub option) -->
-            <div class="theme-option sub" data-theme="light" id="lightOption" role="button" tabindex="0" aria-label="Light theme">
-                <span class="icon">
-                    <!-- sun icon (same stroke style) -->
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="12" cy="12" r="5"/>
-                        <line x1="12" y1="1" x2="12" y2="3"/>
-                        <line x1="12" y1="21" x2="12" y2="23"/>
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-                        <line x1="1" y1="12" x2="3" y2="12"/>
-                        <line x1="21" y1="12" x2="23" y2="12"/>
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-                    </svg>
-                </span>
-                <span class="label">Light</span>
-            </div>
-
+        <!-- SINGLE THEME TOGGLE BUTTON -->
+        <div class="theme-toggle" id="themeToggle" role="button" tabindex="0" aria-label="Toggle theme">
+            <span class="icon" id="themeIcon">
+                <!-- Default: moon icon (dark theme active) -->
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+            </span>
+            <span class="label" id="themeLabel">Dark</span>
         </div>
     </div>
 
     <script>
         (function() {
             const body = document.body;
-            const darkOption = document.getElementById('darkOption');
-            const lightOption = document.getElementById('lightOption');
+            const toggle = document.getElementById('themeToggle');
+            const icon = document.getElementById('themeIcon');
+            const label = document.getElementById('themeLabel');
 
-            // ----- apply theme class & update active state -----
+            // SVG markup for both icons
+            const moonSVG = `
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>`;
+
+            const sunSVG = `
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="5"/>
+                    <line x1="12" y1="1" x2="12" y2="3"/>
+                    <line x1="12" y1="21" x2="12" y2="23"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                    <line x1="1" y1="12" x2="3" y2="12"/>
+                    <line x1="21" y1="12" x2="23" y2="12"/>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </svg>`;
+
+            // Apply theme and update the button in place
             function setTheme(theme) {
-                // remove both theme classes, then add the correct one
                 body.classList.remove('dark', 'light');
                 body.classList.add(theme);
-                
-                // update active class on switcher options
+
                 if (theme === 'dark') {
-                    darkOption.classList.add('active');
-                    lightOption.classList.remove('active');
+                    icon.innerHTML = moonSVG;
+                    label.textContent = 'Dark';
                 } else {
-                    lightOption.classList.add('active');
-                    darkOption.classList.remove('active');
+                    icon.innerHTML = sunSVG;
+                    label.textContent = 'Light';
                 }
-                
-                // store preference
+
                 localStorage.setItem('theme', theme);
             }
 
-            // ----- initial load: default dark, unless saved preference -----
+            // Initial load — default dark, unless saved preference
             const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'light' || savedTheme === 'dark') {
-                setTheme(savedTheme);
-            } else {
-                // no saved preference → default to dark
-                setTheme('dark');
+            setTheme(savedTheme === 'light' ? 'light' : 'dark');
+
+            // Toggle handler
+            function toggleTheme() {
+                const isDark = body.classList.contains('dark');
+                setTheme(isDark ? 'light' : 'dark');
             }
 
-            // ----- event listeners (click + keyboard) -----
-            function handleThemeClick(theme) {
-                setTheme(theme);
-            }
-
-            // dark option listeners
-            darkOption.addEventListener('click', () => handleThemeClick('dark'));
-            darkOption.addEventListener('keydown', (e) => {
+            toggle.addEventListener('click', toggleTheme);
+            toggle.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
-                    handleThemeClick('dark');
+                    toggleTheme();
                 }
             });
 
-            // light option listeners
-            lightOption.addEventListener('click', () => handleThemeClick('light'));
-            lightOption.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    handleThemeClick('light');
-                }
-            });
-
-            // optional: listen to system preference changes only if no saved theme
+            // Respond to system theme changes only if no saved preference
             window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
                 if (localStorage.getItem('theme') === null) {
                     setTheme(e.matches ? 'dark' : 'light');
