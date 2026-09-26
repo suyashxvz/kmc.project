@@ -58,10 +58,14 @@
             max-width: 45vw;
         }
 
+        /* Nav items are now anchors — reset link styles */
         .nav-item {
+            color: inherit;
+            text-decoration: none;
             transition: color 0.3s ease;
             cursor: pointer;
             white-space: nowrap;
+            display: inline-block;
         }
 
         .nav-item:hover {
@@ -207,11 +211,11 @@
 
     <!-- Right side: navigation + single theme toggle -->
     <div class="nav-menu">
-        <div class="nav-item">Explore</div>
+        <a href="https://github.com/suyashxvz" target="_blank" rel="noopener noreferrer" class="nav-item">Explore</a>
         <div class="nav-item">BRU Sunglasses</div>
-        <div class="nav-item">MKK. Watches</div>
+        <a href="https://suyashxvz.github.io/mkk.watches" target="_blank" rel="noopener noreferrer" class="nav-item">MKK. Watches</a>
         <div class="nav-item">LTP Charger</div>
-        <div class="nav-item">Visit My Portfolio</div>
+        <a href="https://suyashxvz.github.io/portfolio/" target="_blank" rel="noopener noreferrer" class="nav-item">Visit My Portfolio</a>
 
         <!-- SINGLE THEME TOGGLE BUTTON -->
         <div class="theme-toggle" id="themeToggle" role="button" tabindex="0" aria-label="Toggle theme">
